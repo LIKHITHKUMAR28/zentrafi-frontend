@@ -21,16 +21,21 @@ function AuthForm({ onLogin }) {
     setError('');
     try {
       const url = isRegister
-        ? 'http://localhost:5000/api/users/register'
-        : 'http://localhost:5000/api/users/login';
+        ? `${process.env.REACT_APP_API_URL}/api/users/register`
+        : `${process.env.REACT_APP_API_URL}/api/users/login`;
 
       const res = await axios.post(url, form);
 
       localStorage.setItem('finance_token', res.data.token);
       localStorage.setItem('finance_name', res.data.name);
-      onLogin(); 
+      onLogin();
     } catch (err) {
-      setError('Invalid credentials or user already exists');
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError('Login failed. Please check credentials or try again later.');
+      }
+      console.error('Login/Register error:', err);
     }
   };
 
@@ -54,7 +59,7 @@ function AuthForm({ onLogin }) {
               name="name"
               value={form.name}
               onChange={handleChange}
-              className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
               required
             />
           </>
@@ -66,7 +71,7 @@ function AuthForm({ onLogin }) {
           name="email"
           value={form.email}
           onChange={handleChange}
-          className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
           required
         />
 
@@ -76,7 +81,7 @@ function AuthForm({ onLogin }) {
           name="password"
           value={form.password}
           onChange={handleChange}
-          className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full border border-gray-300 px-3 py-2 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
           required
         />
 
