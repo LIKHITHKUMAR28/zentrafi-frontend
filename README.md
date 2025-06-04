@@ -7,10 +7,10 @@
 ## 🌐 Live Demo
 
 - 🔗 **Frontend** (React):  
-  [https://zentrafi-frontend.vercel.app](https://zentrafi-frontend.vercel.app)
+  [https://zentrafi-frontend.vercel.app](https://zentrafi-frontend-4a7l.vercel.app/)
 
 - 🔗 **Backend API** (Express + MongoDB):  
-  [https://zentrafi-backend-production.up.railway.app](https://zentrafi-backend-production.up.railway.app)
+  [https://zentrafi-backend-production.up.railway.app](https://zentrafi-backend-production.up.railway.app/)
 
 ---
 
@@ -45,6 +45,6 @@ personal-finance-tracker/
 └── server/ # Backend (Express + MongoDB)
 
 🚀 Deployment Links
-Frontend: https://zentrafi-frontend.vercel.app
+Frontend: https://zentrafi-frontend-4a7l.vercel.app/
 
-Backend: https://zentrafi-backend-production.up.railway.app
+Backend: https://zentrafi-backend-production.up.railway.app/
