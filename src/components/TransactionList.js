@@ -4,7 +4,6 @@ import axios from 'axios';
 function TransactionList({ token, refreshTrigger }) {
   const [transactions, setTransactions] = useState([]);
 
-  
   const [filterType, setFilterType] = useState('all');
   const [filterCategory, setFilterCategory] = useState('');
   const [minAmount, setMinAmount] = useState('');
@@ -16,7 +15,7 @@ function TransactionList({ token, refreshTrigger }) {
     const fetchTransactions = async () => {
       try {
         if (!token) return;
-        const res = await axios.get('http://localhost:5000/api/transactions', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/transactions`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -28,23 +27,21 @@ function TransactionList({ token, refreshTrigger }) {
     };
 
     fetchTransactions();
-  }, [token, refreshTrigger]); 
+  }, [token, refreshTrigger]);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/transactions/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/transactions/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      
       setTransactions(prev => prev.filter(txn => txn._id !== id));
     } catch (err) {
       console.error('Error deleting transaction:', err);
     }
   };
 
-  
   const filteredTransactions = transactions.filter(txn => {
     const txnDate = new Date(txn.date);
     const start = startDate ? new Date(startDate) : null;
@@ -64,7 +61,6 @@ function TransactionList({ token, refreshTrigger }) {
     <div className="mt-10">
       <h2 className="text-2xl font-bold mb-6 text-white">Your Transactions</h2>
 
-      { }
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 mb-6">
         <div>
           <label className="block text-sm text-white mb-1">Type</label>
@@ -131,7 +127,6 @@ function TransactionList({ token, refreshTrigger }) {
         </div>
       </div>
 
-      { }
       {filteredTransactions.length === 0 ? (
         <p className="text-white/80">No transactions match your filters.</p>
       ) : (
@@ -149,10 +144,7 @@ function TransactionList({ token, refreshTrigger }) {
             </thead>
             <tbody>
               {filteredTransactions.map(txn => (
-                <tr
-                  key={txn._id}
-                  className="border-t hover:bg-indigo-50/60 transition duration-150"
-                >
+                <tr key={txn._id} className="border-t hover:bg-indigo-50/60 transition duration-150">
                   <td className="p-3 capitalize">{txn.type}</td>
                   <td className="p-3">{txn.category}</td>
                   <td className="p-3">₹{txn.amount}</td>

@@ -9,7 +9,6 @@ import TransactionList from './components/TransactionList';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('finance_token'));
   const [name, setName] = useState(localStorage.getItem('finance_name'));
-
   const [transactions, setTransactions] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -19,7 +18,7 @@ function App() {
     const fetchData = async () => {
       try {
         if (!token) return;
-        const res = await axios.get('http://localhost:5000/api/transactions', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/transactions`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +49,6 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#845EC2] via-[#2C73D2] to-[#29C7AC] px-4 pb-10 font-sans text-white">
       <div className="max-w-5xl mx-auto">
-
         {/* Header */}
         <header className="flex flex-col sm:flex-row justify-between items-center py-6">
           <div className="text-center sm:text-left">

@@ -28,13 +28,9 @@ function AuthForm({ onLogin }) {
 
       localStorage.setItem('finance_token', res.data.token);
       localStorage.setItem('finance_name', res.data.name);
-      onLogin();
+      onLogin(); 
     } catch (err) {
-      if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Login failed. Please check credentials or try again later.');
-      }
+      setError('Invalid credentials or user already exists');
       console.error('Login/Register error:', err);
     }
   };
